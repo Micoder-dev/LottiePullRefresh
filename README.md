@@ -119,12 +119,12 @@ LottiePullRefresh(
     composition = composition,
     refreshThreshold = 96.dp,
     indicatorSize = 56.dp,
-    indicatorOverlay = false,     // push the content down instead of floating over it
-    indicatorBackground = true,   // draw a circular surface behind the animation
 ) {
     // content
 }
 ```
+
+See [Modes & styles](#modes--styles) for the overlay vs push-down modes and the background/size options.
 
 ### Fully custom indicator
 
@@ -158,6 +158,67 @@ LottiePullRefresh(
 | `isRefreshing` | whether a refresh is in progress |
 | `isSwipeInProgress` | whether the user is actively dragging |
 | `indicatorOffset` | current indicator offset in pixels (drive custom visuals off this) |
+
+## Modes & styles
+
+### Overlay (default)
+
+The indicator floats over the content. Swap in any **vector** Lottie and it scrubs 0→1 with the pull.
+
+<table>
+<tr>
+<td width="55%">
+
+```kotlin
+LottiePullRefresh(
+    isRefreshing = isRefreshing,
+    onRefresh = { refresh() },
+    lottieJson = butterflyJson,
+    indicatorSize = 48.dp,       // circular butterfly
+    // indicatorOverlay = true   // (default) float over content
+) {
+    LazyColumn { items(rows) { RowItem(it) } }
+}
+```
+
+Use `indicatorBackground = false` for a background-less indicator
+(e.g. the dot spinner), and bump `indicatorSize` for larger art.
+
+</td>
+<td width="45%">
+<img src="art/spin.gif" width="230" alt="Overlay dot-spinner demo" />
+</td>
+</tr>
+</table>
+
+### Push-down
+
+Set `indicatorOverlay = false` and the **content is pushed down** by the pull distance, so the
+indicator sits in the gap above it (like the classic Material swipe-refresh).
+
+<table>
+<tr>
+<td width="55%">
+
+```kotlin
+LottiePullRefresh(
+    isRefreshing = isRefreshing,
+    onRefresh = { refresh() },
+    lottieJson = butterflyJson,
+    indicatorOverlay = false,     // push content down
+    indicatorBackground = true,   // circular surface behind the animation
+    refreshThreshold = 80.dp,
+) {
+    LazyColumn { items(rows) { RowItem(it) } }
+}
+```
+
+</td>
+<td width="45%">
+<img src="art/pushdown.gif" width="230" alt="Push-down mode demo" />
+</td>
+</tr>
+</table>
 
 ## API surface
 
