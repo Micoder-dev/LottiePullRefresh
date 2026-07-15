@@ -1,0 +1,7 @@
+# JitPack build configuration.
+# AGP 8.11 + Gradle 8.13 require JDK 17. Publish only the library to the local Maven repo that
+# JitPack harvests (skips building the sample app).
+jdk:
+  - openjdk17
+install:
+  - ./gradlew :lottie-pullrefresh:publishToMavenLocal
